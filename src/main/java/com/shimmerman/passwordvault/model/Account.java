@@ -15,34 +15,28 @@ public abstract class Account {
      * The encrypted password for the account.
      */
     private String password;
-    
-    /**
-     * Creates an account with no username or password.
-     */
-    public Account() {
-    }
 
     /**
      * Creates an account with a username but no password.
-     * @param username the username of the account.
+     * @param username The username of the account.
      */
-    public Account(String username) {
+    protected Account(String username) {
         this.username = username;
     }
 
     /**
      * Creates an account with a username and encrypted password.
-     * @param username the username of the account.
-     * @param password the encrypted password for the account.
+     * @param username The username of the account.
+     * @param password The encrypted password for the account.
      */
-    public Account(String username, String password) {
+    protected Account(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
     /**
      * Gets the username of the account.
-     * @return the username.
+     * @return The username.
      */
     public String getUsername() {
         return username;
@@ -50,7 +44,7 @@ public abstract class Account {
 
     /**
      * Set the username of the account.
-     * @param username the username.
+     * @param username The username.
      */
     public void setUsername(String username) {
         this.username = username;
@@ -58,7 +52,7 @@ public abstract class Account {
 
     /**
      * Gets the encrypted password of the account.
-     * @return the encrypted password.
+     * @return The encrypted password.
      */
     public String getPassword() {
         return password;
@@ -66,7 +60,7 @@ public abstract class Account {
 
     /**
      * Set the encrypted password for the account.
-     * @param password the encrypted password.
+     * @param password The encrypted password.
      */
     public void setPassword(String password) {
         this.password = password;
