@@ -60,3 +60,6 @@ fabric.properties
 # Ignore log files
 *.log
 
+# Ignore derby database
+PasswordVault.db
+
