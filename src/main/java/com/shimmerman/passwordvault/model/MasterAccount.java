@@ -1,13 +1,15 @@
 package com.shimmerman.passwordvault.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is a class for the Master Account, extending Account, that also contains a list of Security
  * Questions with the functionality to create and delete Security Questions.
  * @author Jeremy Larsen
  */
-public class MasterAccount extends Account {
+public class MasterAccount extends Account implements DatabaseObjectAddable {
 
     /**
      * List of Security Questions.
@@ -59,5 +61,14 @@ public class MasterAccount extends Account {
     public boolean deleteSecurityQuestion(SecurityQuestion securityQuestion) {
 
         return true;
+    }
+
+    public Map<String, Object> getDatabaseObjectProperties() {
+
+        HashMap<String, Object> properties = new HashMap<String, Object>();
+        properties.put("username", getUsername());
+        properties.put("password", getPassword());
+
+        return properties;
     }
 }
