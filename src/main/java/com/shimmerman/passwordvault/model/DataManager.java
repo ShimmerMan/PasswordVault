@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class DataManager {
 
-    final static Logger logger = Logger.getLogger(DataManager.class);
+    private static final Logger logger = Logger.getLogger(DataManager.class);
 
 
     private static String dbType = "org.apache.derby.jdbc.EmbeddedDriver";
@@ -25,7 +25,7 @@ public class DataManager {
     private static Statement stmt = null;
 
 
-    private static boolean createConnection() throws Exception {
+    public static boolean createConnection() throws Exception {
         logger.trace("Entering - createConnection");
 
         boolean isConnected= false;
@@ -55,7 +55,7 @@ public class DataManager {
         return isConnected;
     }
 
-    private static boolean shutdown() throws Exception {
+    public static boolean shutdown() throws Exception {
         logger.trace("Entering - shutdown");
 
         boolean isShutdown = false;
