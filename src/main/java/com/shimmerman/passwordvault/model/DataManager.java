@@ -9,6 +9,7 @@ import java.util.Map;
 /**
  * Manages the database in terms of connections and saveing/getting data.
  * @author Carl
+ * @author Jeremy
  */
 public class DataManager {
 
@@ -20,6 +21,9 @@ public class DataManager {
     private static Connection conn = null;
     private static Statement stmt = null;
 
+    /**
+     * Checks the embedded databse and makes a connection.
+     */
     public static boolean createConnection() throws Exception {
         logger.trace("Entering - createConnection");
 
@@ -53,6 +57,9 @@ public class DataManager {
         return isConnected;
     }
 
+    /**
+     * Shuts down statements and connections currently open to the database.
+     */
     public static boolean shutdown() throws Exception {
         logger.trace("Entering - shutdown");
 
@@ -101,6 +108,11 @@ public class DataManager {
         return null  ;
     }
 
+    /**
+     * Adds the object using the DatabseObjectAddable interface and determines the object to be added.
+     * The object is a map.
+     * @param object The object (a map) to be added.
+     */
     public static boolean add(DatabaseObjectAddable object) throws Exception {
         logger.trace("Entering - add");
 
@@ -141,12 +153,15 @@ public class DataManager {
         return false;
     }
 
+    /**
+     * Initialises all the tables if they don't already exist in the database.
+     */
     private static boolean initialiseTables() throws SQLException {
 
         boolean isInitialised = false;
 
         DatabaseMetaData metaData = conn.getMetaData();
-        ResultSet tables = metaData.getTables(null, null, "master_account", null);
+        ResultSet tables = metaData.getTables(null, null, "MASTER_ACCOUNT", null);
         if (!tables.next()) {
             stmt = conn.createStatement();
             stmt.execute("create table master_account (username varchar(20), password varchar(20), primary key (username))");
@@ -158,6 +173,9 @@ public class DataManager {
         return isInitialised;
     }
 
+    /**
+     * Prints out to system the Master Account table.
+     */
     public static void printMasterAccountTable() {
         try {
             stmt = conn.createStatement();
