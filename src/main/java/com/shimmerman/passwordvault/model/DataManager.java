@@ -162,13 +162,29 @@ public class DataManager {
 
         DatabaseMetaData metaData = conn.getMetaData();
         ResultSet tables = metaData.getTables(null, null, "MASTER_ACCOUNT", null);
+
+        // Check for 'master_account' table
         if (!tables.next()) {
             stmt = conn.createStatement();
             stmt.execute("create table master_account (username varchar(20), password varchar(20), primary key (username))");
             stmt.close();
+            logger.trace("Initialising 'master_account' table");
+        } else {
+            logger.trace("Already initialised 'master_account' table");
         }
         tables.close();
 
+        // Check for 'security_question' table
+        tables = metaData.getTables(null, null, "SECURITY_QUESTION", null);
+        if (!tables.next()) {
+            stmt = conn.createStatement();
+            stmt.execute("create table security_question (securityquestion varchar(60), securityanswer varchar(20), username varchar(20) references master_account(username))");
+            stmt.close();
+            logger.trace("Initialising 'security_question' table");
+        } else {
+            logger.trace("Already initialised 'security_question' table");
+        }
+        tables.close();
 
         return isInitialised;
     }

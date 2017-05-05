@@ -1,6 +1,6 @@
 package com.shimmerman.passwordvault;
 
-/**
+/*
  *  Using the log4j Logger for logging errors, warnings, etc.
  */
 import com.shimmerman.passwordvault.model.DataManager;
@@ -20,16 +20,16 @@ public class PasswordVault {
         properties.put("username", "FAaaarr");
         System.out.println(Arrays.toString(properties.entrySet().toArray()));
 
-        MasterAccount masterAccount = new MasterAccount("Carl", "Handsome", null);
+
+        //MasterAccount masterAccount = new MasterAccount("Carl", "Handsome", null);
         try {
             DataManager.createConnection();
-            DataManager.add(masterAccount);
+            //DataManager.add(masterAccount);
             DataManager.printMasterAccountTable();
             DataManager.shutdown();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
 }
