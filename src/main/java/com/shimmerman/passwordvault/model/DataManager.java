@@ -122,6 +122,7 @@ public class DataManager {
 
             Map<String, Object> properties = object.getDatabaseObjectProperties();
 
+            // Is the object to be added a master account?
             if (object instanceof MasterAccount) {
                 String username = properties.get("username").toString();
                 String password = properties.get("password").toString();
@@ -129,11 +130,26 @@ public class DataManager {
                 stmt = conn.createStatement();
                 stmt.execute("insert into master_account values ('" + username + "','" + password + "')");
                 stmt.close();
+
+                //properties.get("username");
+
+                isAdded = true;
+                logger.trace("Master Account '" + username + "' added");
             }
 
-            properties.get("username");
+            // Is the object to be added a security question?
+            if (object instanceof SecurityQuestion) {
+                String securityQuestion = properties.get("securityQuestion").toString();
+                String securityAnswer = properties.get("securityAnswer").toString();
+                String masterAccountName = properties.get("masterAccountName").toString();
 
-            isAdded = true;
+                stmt = conn.createStatement();
+                stmt.execute("insert into security_question values ('" + securityQuestion + "','" + securityAnswer + "','" + masterAccountName + "')");
+                stmt.close();
+
+                isAdded = true;
+                logger.trace("Security Question '" + securityQuestion + "' added to Master Account '" + masterAccountName + "'");
+            }
         }
 
         logger.trace("Leaving - add");
@@ -211,6 +227,37 @@ public class DataManager {
                 String username = results.getString(1);
                 String password = results.getString(2);
                 System.out.println("\t\t" + username + "\t\t" + password);
+            }
+            results.close();
+            stmt.close();
+        } catch (SQLException sqlE) {
+            sqlE.printStackTrace();
+        }
+    }
+
+    /**
+     * Prints out to system the Master Account table.
+     */
+    public static void printSecurityQuestionTable() {
+        try {
+            stmt = conn.createStatement();
+            ResultSet results = stmt.executeQuery("select * from security_question");
+            ResultSetMetaData rsmd = results.getMetaData();
+            int numberCols = rsmd.getColumnCount();
+            for (int i=1; i<=numberCols; i++)
+            {
+                //print Column Names
+                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+            }
+
+            System.out.println("\n-------------------------------------------------");
+
+            while(results.next())
+            {
+                String securityquestion = results.getString(1);
+                String securityanswer = results.getString(2);
+                String masteraccountname = results.getString(3);
+                System.out.println("\t\t" + securityquestion + "\t\t" + securityanswer + "\t\t" + masteraccountname);
             }
             results.close();
             stmt.close();
